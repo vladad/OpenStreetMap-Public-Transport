@@ -25,3 +25,10 @@ button.save {
 	margin: 8px;
 }
 
+div.copyright {
+	margin: 8px;
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color: #666666;
+}
+
