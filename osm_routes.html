@@ -1,0 +1,89 @@
+<html>
+	<head>
+	  <meta charset="UTF-8">
+	   <link rel="stylesheet" href="osm_common.css">
+	</head> 
+	<body>
+		<table id='tbl' class="gridtable"></table>
+		<textarea id="myTextArea" style="font-family: Arial;font-size: 12pt;width:100%;height:100vw"></textarea>
+
+		<script type="text/javascript" src="osm_common.js"></script>
+		<script type="text/javascript">
+		
+			const ignoredOperators = ["Flixbus", "VisitTour", "PKS Szceszinek", "Gumdrop", "JORDAN Group"
+					, "Veolia Transport Česká republika a. s.", "CSAD KARVINA", "CSAD Karviná"
+					, "CSAD HAVIROV", "ČSAD Havířov", "ARRIVA"];
+		
+			
+
+			const query = 'area["name"="Ostrava"]->.boundaryarea;(rel(area.boundaryarea)["type"="route"]["route"~"bus|trolleybus|tram"];);';
+			const url = "https://www.overpass-api.de/api/interpreter?data=[out:json];" + query + "out%20meta;"
+
+			const orig = JSON.parse(httpGet(url))
+			console.log(orig);
+
+			const output = []
+			orig["elements"].forEach( f =>
+			{
+				delete f["members"];
+
+				const prop = f["tags"];
+				
+				console.log(prop["id"]);
+				
+				delete prop["type"]; // all are "route"
+			
+				const id = f["id"];
+				prop["relation"] = id;
+				if (ignoredOperators.indexOf(prop["operator"]) == -1)
+				{
+					output.push(prop)
+					//prop["relation"] = id.substr(id.indexOf("/") + 1);
+					delete prop["@id"];
+				}
+				
+			})
+			
+			output.sort(function(a,b){
+			  const firstRef = a["ref"]
+			  const secondRef = b["ref"]
+			  
+
+			  return parseInt(firstRef, 10) > parseInt(secondRef, 10) ? 1 : -1;
+			});
+			
+			
+			console.log(output)
+			
+			const pretty = JSON.stringify(output, undefined, 4);
+			document.getElementById('myTextArea').value = pretty;
+
+
+			function addRow(tbl, refVal, relationVal, typeVal, nameVal, fromVal, toVal, versionVal, completeVal, operatorVal, networkVal, wikidataVal, wikipediaVal) {
+				var tr = document.createElement('tr');
+
+				addTextCell(tr, refVal);
+				addRelationCell(tr, relationVal);
+				addTextCell(tr, typeVal);
+				addTextCell(tr, nameVal);
+				addTextCell(tr, fromVal);
+				addTextCell(tr, toVal);
+				addTextCell(tr, versionVal);
+				addTextCell(tr, completeVal);
+				addTextCell(tr, operatorVal);
+				addTextCell(tr, networkVal);
+				addWikidataCell(tr, wikidataVal);
+				addWikipediaCell(tr, wikipediaVal);
+
+				tbl.appendChild(tr)
+			  }
+			  
+			tbl = document.getElementById('tbl');
+
+			output.forEach( o => {
+				addRow(tbl, o["ref"], o["relation"], o["route"], o["name"], o["from"], o["to"], o["public_transport:version"], o["complete"], o["operator"], o["network"], o["wikidata"], o["wikipedia"]);
+			});
+		</script>
+		
+	</body>
+</html>
