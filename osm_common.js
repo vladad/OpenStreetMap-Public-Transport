@@ -24,8 +24,17 @@ function download(content, fileName, contentType) {
 }
 
 
+function addHeaderCell(tr, val) {
+	const td = document.createElement("th");
+
+	td.innerHTML = val;
+
+	tr.appendChild(td);
+}
+
+
 function addTextCell(tr, val) {
-	const td = document.createElement('td');
+	const td = document.createElement("td");
 
 	td.innerHTML = val === undefined ? "-" : val;
 
@@ -34,8 +43,8 @@ function addTextCell(tr, val) {
 
 
 function addRelationCell(tr, val) {
-	const td = document.createElement('td');
-	const anchor = document.createElement('a');
+	const td = document.createElement("td");
+	const anchor = document.createElement("a");
 	anchor.href = "https://www.openstreetmap.org/relation/" + val
 	anchor.text = val;
 	td.appendChild(anchor);
@@ -49,8 +58,8 @@ function addWikidataCell(tr, val) {
 		return;
 	}
 
-	const td = document.createElement('td');
-	const anchor = document.createElement('a');
+	const td = document.createElement("td");
+	const anchor = document.createElement("a");
 	anchor.href = "https://www.wikidata.org/wiki/" + val
 	anchor.text = val;
 	td.appendChild(anchor);
@@ -67,8 +76,8 @@ function addWikipediaCell(tr, val) {
 	const lang = splittedVal[0]
 	const page = splittedVal[1]
 
-	const td = document.createElement('td');
-	const anchor = document.createElement('a');
+	const td = document.createElement("td");
+	const anchor = document.createElement("a");
 	anchor.href = "https://" + lang + ".wikipedia.org/wiki/" + page
 	anchor.text = val;
 	td.appendChild(anchor);

@@ -51,16 +51,29 @@
 				return parseInt(firstRef, 10) > parseInt(secondRef, 10) ? 1 : -1;
 			});
 
-
-			console.log(output)
-
-			//jsonData = output;
-
 			jsonData = JSON.stringify(output, undefined, 4);
 
+			function addHeader(tbl) {
+				const tr = document.createElement("tr");
+
+				addHeaderCell(tr, "Ref");
+				addHeaderCell(tr, "Relation");
+				addHeaderCell(tr, "Type");
+				addHeaderCell(tr, "Name");
+				addHeaderCell(tr, "From");
+				addHeaderCell(tr, "To");
+				addHeaderCell(tr, "PT version");
+				addHeaderCell(tr, "Complete");
+				addHeaderCell(tr, "Operator");
+				addHeaderCell(tr, "Network");
+				addHeaderCell(tr, "Wikidata");
+				addHeaderCell(tr, "Wikipedia");
+
+				tbl.appendChild(tr)
+			}
 
 			function addRow(tbl, refVal, relationVal, typeVal, nameVal, fromVal, toVal, versionVal, completeVal, operatorVal, networkVal, wikidataVal, wikipediaVal) {
-				var tr = document.createElement("tr");
+				const tr = document.createElement("tr");
 
 				addTextCell(tr, refVal);
 				addRelationCell(tr, relationVal);
@@ -83,11 +96,13 @@
 			// removing "Loading ..." row
 			tbl.innerHTML = "";
 
+			addHeader(tbl);
+
 			output.forEach(o => {
 				addRow(tbl, o["ref"], o["relation"], o["route"], o["name"], o["from"], o["to"], o["public_transport:version"], o["complete"], o["operator"], o["network"], o["wikidata"], o["wikipedia"]);
 			});
 
-			document.getElementById("btnSave").disabled = false; 
+			document.getElementById("btnSave").disabled = false;
 		}
 
 		httpGetAsync(url, httpCallback);
@@ -105,7 +120,9 @@
 		</tr>
 	</table>
 	<button id='btnSave' class='save' disabled onclick="saveData()">Save to JSON</button>
-	<div class='copyright'><a href="https://github.com/vladad">© Vladimír Domes</a> & <a href="http://overpass-turbo.eu" >© Overpass Turbo</a> & <a href="https://www.openstreetmap.org/copyright" >© OpenStreetMap contributors</a></div>
+	<div class='copyright'><a href="https://github.com/vladad">© Vladimír Domes</a> & <a
+			href="http://overpass-turbo.eu">© Overpass Turbo</a> & <a href="https://www.openstreetmap.org/copyright">©
+			OpenStreetMap contributors</a></div>
 
 </body>
 
