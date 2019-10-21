@@ -11,7 +11,7 @@
 
 		const ignoredOperators = ["Flixbus", "VisitTour", "PKS Szceszinek", "Gumdrop", "JORDAN Group"
 			, "Veolia Transport Česká republika a. s.", "CSAD KARVINA", "CSAD Karviná"
-			, "CSAD HAVIROV", "ČSAD Havířov", "ARRIVA"];
+			, "CSAD HAVIROV", "ČSAD Havířov", "ARRIVA", "Transdev Morava s.r.o."];
 
 
 
@@ -38,7 +38,6 @@
 				prop["relation"] = id;
 				if (ignoredOperators.indexOf(prop["operator"]) == -1) {
 					output.push(prop)
-					//prop["relation"] = id.substr(id.indexOf("/") + 1);
 					delete prop["@id"];
 				}
 
@@ -61,7 +60,7 @@
 
 
 			function addRow(tbl, refVal, relationVal, typeVal, nameVal, fromVal, toVal, versionVal, completeVal, operatorVal, networkVal, wikidataVal, wikipediaVal) {
-				var tr = document.createElement('tr');
+				var tr = document.createElement("tr");
 
 				addTextCell(tr, refVal);
 				addRelationCell(tr, relationVal);
@@ -79,7 +78,7 @@
 				tbl.appendChild(tr)
 			}
 
-			tbl = document.getElementById('tbl');
+			tbl = document.getElementById("tbl");
 
 			// removing "Loading ..." row
 			tbl.innerHTML = "";
