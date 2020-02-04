@@ -61,6 +61,7 @@
 				addHeaderCell(tr, "Type");
 				addHeaderCell(tr, "Name");
 				addHeaderCell(tr, "From");
+				addHeaderCell(tr, "Via");
 				addHeaderCell(tr, "To");
 				addHeaderCell(tr, "PT version");
 				addHeaderCell(tr, "Complete");
@@ -72,7 +73,7 @@
 				tbl.appendChild(tr)
 			}
 
-			function addRow(tbl, refVal, relationVal, typeVal, nameVal, fromVal, toVal, versionVal, completeVal, operatorVal, networkVal, wikidataVal, wikipediaVal) {
+			function addRow(tbl, refVal, relationVal, typeVal, nameVal, fromVal, viaVal, toVal, versionVal, completeVal, operatorVal, networkVal, wikidataVal, wikipediaVal) {
 				const tr = document.createElement("tr");
 
 				addTextCell(tr, refVal);
@@ -80,6 +81,7 @@
 				addTextCell(tr, typeVal);
 				addTextCell(tr, nameVal);
 				addTextCell(tr, fromVal);
+				addTextCell(tr, viaVal);
 				addTextCell(tr, toVal);
 				addTextCell(tr, versionVal);
 				addTextCell(tr, completeVal);
@@ -99,7 +101,7 @@
 			addHeader(tbl);
 
 			output.forEach(o => {
-				addRow(tbl, o["ref"], o["relation"], o["route"], o["name"], o["from"], o["to"], o["public_transport:version"], o["complete"], o["operator"], o["network"], o["wikidata"], o["wikipedia"]);
+				addRow(tbl, o["ref"], o["relation"], o["route"], o["name"], o["from"], o["via"], o["to"], o["public_transport:version"], o["complete"], o["operator"], o["network"], o["wikidata"], o["wikipedia"]);
 			});
 
 			document.getElementById("btnSave").disabled = false;
